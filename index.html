@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Adrian Alonso Rumbaut | Pentester</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio profesional de Adrian Alonso Rumbaut, pentester especializado en ciberseguridad ofensiva." />
+  <style>
+    :root {
+      --bg: #050608;
+      --bg-alt: #0b0f16;
+      --card: #10141f;
+      --accent: #35e57a;
+      --accent-soft: rgba(53, 229, 122, 0.2);
+      --accent-alt: #28c0ff;
+      --text: #f5f7ff;
+      --muted: #8892b0;
+      --border: #1c2233;
+      --error: #ff3366;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --radius-sm: 6px;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55);
+      --shadow-subtle: 0 10px 30px rgba(0, 0, 0, 0.35);
+      --transition-fast: 0.18s ease-out;
+      --transition-med: 0.3s ease;
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Inter", "Segoe UI", sans-serif;
+      --font-mono: "SF Mono", "Fira Code", "Fira Mono", Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      /* CAMBIO: ligera subida de tamaño base */
+      font-size: 18px;
+      scroll-behavior: smooth;
+      background: radial-gradient(circle at top, #121927 0, #050608 55%);
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: transparent;
+      color: var(--text);
+      font-family: var(--font-main);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent-alt);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Layout */
+
+    .page {
+      flex: 1;
+      /* CAMBIO: más ancho total */
+      max-width: 1480px;
+      margin: 0 auto;
+      /* CAMBIO: menos padding lateral */
+      padding: 18px 10px 40px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(
+        to bottom,
+        rgba(5, 6, 8, 0.96),
+        rgba(5, 6, 8, 0.78),
+        transparent
+      );
+      border-bottom: 1px solid rgba(40, 48, 72, 0.7);
+    }
+
+    .nav-inner {
+      /* CAMBIO: mismo ancho que .page y menos padding lateral */
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 10px 10px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+    }
+
+    .brand-mark {
+      width: 26px;
+      height: 26px;
+      border-radius: 9px;
+      background: radial-gradient(circle at 30% 20%, #35e57a 0, #0bffb3 20%, #0b0f16 70%);
+      box-shadow:
+        0 0 18px rgba(53, 229, 122, 0.75),
+        inset 0 0 16px rgba(0, 0, 0, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-mark::after {
+      content: "_";
+      position: absolute;
+      left: 7px;
+      top: 2px;
+      font-size: 18px;
+      font-family: var(--font-mono);
+      color: #020304;
+      opacity: 0.95;
+    }
+
+    .brand-text-main {
+      font-size: 0.9rem; /* CAMBIO */
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .brand-text-sub {
+      font-size: 0.9rem; /* CAMBIO */
+      color: var(--accent);
+      opacity: 0.8;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 0.8rem; /* CAMBIO */
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-family: var(--font-mono);
+    }
+
+    nav a {
+      color: var(--muted);
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-alt));
+      transition: width var(--transition-fast);
+    }
+
+    nav a:hover {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(53, 229, 122, 0.7);
+      background: radial-gradient(circle at 0 0, rgba(53, 229, 122, 0.2), transparent 60%);
+      color: var(--accent);
+      font-size: 0.9rem; /* CAMBIO */
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-family: var(--font-mono);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: background var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+      box-shadow: 0 0 0 1px rgba(8, 182, 120, 0.25);
+    }
+
+    .nav-cta span {
+      font-size: 0.8rem;
+      line-height: 0;
+    }
+
+    .nav-cta:hover {
+      background: linear-gradient(120deg, rgba(53, 229, 122, 0.2), rgba(40, 192, 255, 0.2));
+      box-shadow: 0 0 26px rgba(53, 229, 122, 0.65);
+      transform: translateY(-1px);
+    }
+
+    .nav-cta:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .nav-toggle {
+      display: none;
+      cursor: pointer;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      margin: 3px 0;
+      background: var(--muted);
+      transition: transform var(--transition-fast), opacity var(--transition-fast);
+      border-radius: 999px;
+    }
+
+    main {
+      margin-top: 18px;
+    }
+
+    section {
+      margin-bottom: 60px;
+    }
+
+    section:last-of-type {
+      margin-bottom: 30px;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.9rem; /* CAMBIO */
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--accent-alt);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 20px;
+      height: 1px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent-alt), transparent);
+      opacity: 0.7;
+    }
+
+    h1, h2, h3 {
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    h2 {
+      font-size: 1.6rem; /* CAMBIO */
+      margin-bottom: 14px;
+    }
+
+    p {
+      color: var(--muted);
+      font-size: 0.9rem; /* CAMBIO */
+    }
+
+    /* Hero / Inicio */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.45fr);
+      gap: 30px;
+      padding: 22px 20px 24px;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at top left, rgba(53, 229, 122, 0.1), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(40, 192, 255, 0.12), transparent 60%),
+        linear-gradient(135deg, #050608, #04070d 35%, #050608 100%);
+      border: 1px solid rgba(34, 43, 69, 0.9);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(
+          rgba(255, 255, 255, 0.05) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.04) 1px,
+          transparent 1px
+        );
+      background-size: 22px 22px;
+      opacity: 0.15;
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    }
+
+    .hero-left {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-tagline {
+      font-family: var(--font-mono);
+      font-size: 0.9rem; /* CAMBIO */
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-tagline span {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(53, 229, 122, 0.95);
+      animation: pulse 1.5s ease-out infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      70% { transform: scale(1.7); opacity: 0; }
+      100% { transform: scale(1.7); opacity: 0; }
+    }
+
+    .hero-title {
+      font-size: clamp(1.9rem, 4vw, 2.1rem); /* CAMBIO */
+      margin-bottom: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hero-title span:first-child {
+      font-weight: 400;
+      color: var(--muted);
+      font-size: 0.95rem; /* CAMBIO */
+    }
+
+    .hero-title-strong {
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-title-strong span {
+      color: var(--accent-alt);
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem; /* CAMBIO */
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 16px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .hero-meta-item {
+      font-family: var(--font-mono);
+      font-size: 0.75rem; /* CAMBIO */
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(12, 18, 30, 0.9);
+      border: 1px solid rgba(34, 43, 69, 0.9);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-meta-item strong {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .hero-meta-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--accent-alt);
+      opacity: 0.9;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: 1.2rem; /* CAMBIO */
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background var(--transition-med), color var(--transition-med),
+        box-shadow var(--transition-med), transform var(--transition-fast),
+        border-color var(--transition-med);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: radial-gradient(circle at 0 0, #35e57a 0, #1bb067 30%, #0c6b3b 75%);
+      color: #020304;
+      box-shadow:
+        0 0 16px rgba(53, 229, 122, 0.65),
+        0 22px 32px rgba(0, 0, 0, 0.6);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow:
+        0 0 28px rgba(53, 229, 122, 0.8),
+        0 26px 38px rgba(0, 0, 0, 0.7);
+    }
+
+    .btn-secondary {
+      background: rgba(9, 14, 26, 0.9);
+      color: var(--muted);
+      border-color: rgba(40, 192, 255, 0.7);
+      box-shadow: 0 0 14px rgba(40, 192, 255, 0.25);
+    }
+
+    .btn-secondary:hover {
+      color: var(--accent-alt);
+      background: radial-gradient(circle at 0 0, rgba(40, 192, 255, 0.26), rgba(9, 14, 26, 0.96) 60%);
+      box-shadow: 0 0 22px rgba(40, 192, 255, 0.7);
+    }
+
+    .btn-icon {
+      font-size: 0.9rem;
+    }
+
+    .hero-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem; /* CAMBIO */
+      margin-top: 6px;
+    }
+
+    .hero-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+    }
+
+    .hero-link-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+    }
+
+    .hero-right {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-rows: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 14px;
+    }
+
+    .profile-card {
+      position: relative;
+      border-radius: 20px;
+      background: radial-gradient(circle at top, rgba(40, 192, 255, 0.4), transparent 55%),
+        radial-gradient(circle at bottom, rgba(53, 229, 122, 0.4), transparent 55%),
+        linear-gradient(145deg, #060b11, #030509);
+      padding: 10px 10px 12px;
+      border: 1px solid rgba(69, 157, 210, 0.8);
+      box-shadow: var(--shadow-subtle);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
+      gap: 10px;
+      align-items: center;
+    }
+
+    .profile-photo {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      background: radial-gradient(circle at 30% 0, #35e57a 0, #050608 72%);
+      min-height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(130, 223, 176, 0.7);
+      box-shadow:
+        0 0 36px rgba(53, 229, 122, 0.8),
+        0 16px 32px rgba(0, 0, 0, 0.8);
+    }
+
+    .profile-photo-placeholder {
+      text-align: center;
+      padding: 18px 10px;
+      color: rgba(4, 10, 9, 0.96);
+    }
+
+    .profile-photo-placeholder span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid rgba(1, 11, 8, 0.9);
+      background: rgba(5, 11, 9, 0.86);
+      color: #35e57a;
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      margin-bottom: 6px;
+      box-shadow: 0 0 12px rgba(1, 11, 8, 0.9);
+    }
+
+    .profile-photo-placeholder p {
+      font-size: 0.8rem;
+      color: rgba(3, 10, 7, 0.96);
+      line-height: 1.45;
+    }
+
+    .profile-badge {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(3, 9, 7, 0.9);
+      border: 1px solid rgba(32, 214, 124, 0.7);
+      color: #e0fdf2;
+      font-size: 0.9rem;
+      font-family: var(--font-mono);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .profile-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #35e57a;
+      box-shadow: 0 0 10px rgba(53, 229, 122, 0.95);
+    }
+
+    .profile-info {
+      font-size: 1.1rem;
+    }
+
+    .profile-info-title {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(192, 211, 255, 0.78);
+      margin-bottom: 6px;
+    }
+
+    .profile-info-name {
+      font-size: 1rem;
+      margin-bottom: 2px;
+    }
+
+    .profile-info-role {
+      color: rgba(206, 220, 255, 0.9);
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+    }
+
+    .profile-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .profile-tag {
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(84, 182, 238, 0.75);
+      background: rgba(11, 25, 33, 0.9);
+      color: rgba(200, 223, 255, 0.9);
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .profile-cert {
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(73, 220, 148, 0.8);
+      background: rgba(3, 14, 9, 0.92);
+      color: rgba(200, 255, 231, 0.96);
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .profile-info-text {
+      font-size: 1.0rem;
+      color: rgba(190, 208, 245, 0.9);
+      line-height: 1.55;
+      margin-bottom: 8px;
+    }
+
+    .profile-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 8px;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      color: rgba(173, 192, 229, 0.9);
+    }
+
+    .profile-meta-item span {
+      display: block;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(133, 161, 214, 0.85);
+      margin-bottom: 2px;
+    }
+
+    .hero-status {
+      border-radius: 16px;
+      background: rgba(9, 12, 22, 0.96);
+      border: 1px solid rgba(34, 43, 69, 0.9);
+      padding: 10px 10px 9px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .hero-status-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: rgba(163, 185, 230, 0.9);
+    }
+
+    .hero-status-header span {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(121, 148, 209, 0.75);
+    }
+
+    .hero-status-body {
+      font-family: var(--font-mono);
+      font-size: 1.0rem;
+      color: rgba(192, 215, 255, 0.9);
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+
+    .hero-status-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: rgba(150, 173, 219, 0.9);
+    }
+
+    .hero-status-pill {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(8, 16, 33, 0.95);
+      border: 1px solid rgba(60, 120, 255, 0.6);
+    }
+
+    /* Sobre mí + Habilidades */
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1.15fr);
+      gap: 26px;
+    }
+
+    .card {
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at top left, rgba(53, 229, 122, 0.04), transparent 55%),
+        linear-gradient(145deg, #070b12, #05060b);
+      border: 1px solid rgba(32, 39, 59, 0.95);
+      padding: 18px 18px 16px;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 1.2rem;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .skill-group-title {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .skill-tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .skill-tag {
+      font-size: 0.9rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(50, 114, 215, 0.8);
+      color: rgba(184, 204, 246, 0.95);
+      background: rgba(7, 13, 25, 0.96);
+      font-family: var(--font-mono);
+    }
+
+    /* Certificaciones & Idiomas */
+
+    .certs-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 20px;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-family: var(--font-mono);
+      border: 1px solid rgba(73, 220, 148, 0.85);
+      background: rgba(3, 15, 9, 0.95);
+      color: rgba(206, 255, 231, 0.97);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pill::before {
+      content: "✔";
+      font-size: 0.75rem;
+      color: var(--accent);
+    }
+
+    .pill-alt {
+      border-color: rgba(40, 192, 255, 0.8);
+      background: rgba(3, 12, 19, 0.96);
+      color: rgba(210, 235, 255, 0.97);
+    }
+
+    .pill-alt::before {
+      content: "🌐";
+      font-size: 0.75rem;
+    }
+
+    /* Proyectos / Write-ups */
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+    }
+
+    .project-card {
+      border-radius: var(--radius-md);
+      background: radial-gradient(circle at top, rgba(40, 192, 255, 0.08), transparent 60%),
+        linear-gradient(150deg, #060814, #05060b);
+      border: 1px solid rgba(42, 55, 95, 0.95);
+      padding: 14px 14px 12px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.65);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(53, 229, 122, 0.18), transparent 55%);
+      opacity: 0;
+      transition: opacity var(--transition-med);
+      pointer-events: none;
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    .project-title {
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    .project-meta {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: rgba(148, 177, 237, 0.9);
+      margin-bottom: 6px;
+    }
+
+    .project-body {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .project-tag {
+      font-size: 0.8rem;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(69, 157, 210, 0.85);
+      color: rgba(193, 215, 250, 0.96);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .project-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: rgba(148, 177, 237, 0.9);
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent-alt);
+      cursor: pointer;
+    }
+
+    .project-link span {
+      font-size: 0.9rem;
+    }
+
+    /* Contacto */
+
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
+      gap: 22px;
+      align-items: flex-start;
+    }
+
+    .contact-card {
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at top, rgba(40, 192, 255, 0.14), transparent 60%),
+        linear-gradient(140deg, #05060a, #070b12);
+      border: 1px solid rgba(42, 55, 95, 0.96);
+      padding: 18px 18px 16px;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .contact-list {
+      list-style: none;
+      margin-top: 10px;
+      display: grid;
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: var(--radius-md);
+      background: rgba(7, 12, 23, 0.98);
+      border: 1px solid rgba(43, 59, 102, 0.96);
+      font-family: var(--font-mono);
+      color: rgba(189, 209, 245, 0.96);
+      font-size: 0.8rem;
+    }
+
+    .contact-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      background: radial-gradient(circle at 0 0, rgba(53, 229, 122, 0.2), transparent 60%);
+      border: 1px solid rgba(49, 161, 120, 0.9);
+      color: var(--accent);
+    }
+
+    .contact-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(137, 165, 224, 0.9);
+      margin-bottom: 2px;
+    }
+
+    .contact-value a {
+      color: rgba(209, 231, 255, 0.98);
+      text-decoration: none;
+    }
+
+    .contact-value a:hover {
+      text-decoration: underline;
+      color: var(--accent-alt);
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .field-group {
+      display: grid;
+      gap: 4px;
+    }
+
+    label {
+      font-size: 0.75rem;
+      color: rgba(158, 184, 238, 0.96);
+      font-family: var(--font-mono);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 9px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(43, 59, 102, 0.96);
+      background: rgba(5, 8, 16, 0.98);
+      color: var(--text);
+      font-size: 0.9rem;
+      font-family: var(--font-main);
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: rgba(103, 122, 171, 0.95);
+    }
+
+    input:focus, textarea:focus {
+      border-color: rgba(53, 229, 122, 0.9);
+      box-shadow: 0 0 0 1px rgba(53, 229, 122, 0.4);
+      background: rgba(3, 9, 7, 0.97);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    .contact-note {
+      font-size: 0.9rem;
+      color: rgba(140, 166, 221, 0.9);
+      margin-top: 4px;
+      font-family: var(--font-mono);
+    }
+
+    .form-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+      font-size: 0.9rem;
+      font-family: var(--font-mono);
+      color: rgba(140, 166, 221, 0.9);
+    }
+
+    .form-status {
+      min-height: 14px;
+    }
+
+    .form-status.error {
+      color: var(--error);
+    }
+
+    footer {
+      border-top: 1px solid rgba(34, 43, 69, 0.95);
+      padding: 12px 10px 18px; /* CAMBIO: menos margen lateral */
+      font-size: 0.9rem;
+      color: var(--muted);
+      text-align: center;
+      font-family: var(--font-mono);
+      background: linear-gradient(to top, rgba(3, 5, 9, 0.98), transparent);
+    }
+
+    footer span {
+      color: var(--accent);
+    }
+
+    /* Responsive */
+
+    @media (max-width: 860px) {
+      nav ul {
+        position: absolute;
+        inset: 44px 10px auto 10px; /* CAMBIO: coincide con padding reducido */
+        border-radius: 12px;
+        padding: 10px 12px;
+        background: rgba(5, 7, 13, 0.96);
+        border: 1px solid rgba(34, 43, 69, 0.95);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        transform-origin: top;
+        transform: scaleY(0.7);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.18s ease-out, transform 0.18s ease-out;
+      }
+
+      nav ul.open {
+        opacity: 1;
+        transform: scaleY(1);
+        pointer-events: auto;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+
+      .nav-toggle {
+        display: block;
+      }
+
+      .nav-toggle.open span:nth-child(1) {
+        transform: translateY(5px) rotate(45deg);
+      }
+
+      .nav-toggle.open span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .nav-toggle.open span:nth-child(3) {
+        transform: translateY(-5px) rotate(-45deg);
+      }
+
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 18px 16px 18px;
+      }
+
+      .hero-right {
+        grid-template-rows: minmax(0, 1.3fr) minmax(0, 1fr);
+      }
+
+      .profile-card {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.3fr);
+      }
+
+      .page {
+        padding-inline: 12px; /* CAMBIO */
+      }
+    }
+
+    @media (max-width: 720px) {
+      .hero {
+        padding-inline: 12px;
+      }
+
+      .profile-card {
+        grid-template-columns: 1fr;
+      }
+
+      .two-col,
+      .certs-grid,
+      .contact-wrapper {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      section {
+        margin-bottom: 42px;
+      }
+
+      .projects-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .hero {
+        padding-inline: 10px;
+      }
+
+      .card,
+      .contact-card {
+        padding-inline: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="brand-mark"></div>
+        <div>
+          <div class="brand-text-main">Adrian Alonso</div>
+          <div class="brand-text-sub">Offensive Security · Pentesting</div>
+        </div>
+      </div>
+      <nav>
+        <div class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul id="navMenu">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#sobre-mi">Sobre mí</a></li>
+          <li><a href="#habilidades">Habilidades</a></li>
+          <li><a href="#certificaciones">Certificaciones</a></li>
+          <li><a href="#proyectos">Proyectos</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+      <button class="nav-cta" onclick="document.getElementById('contacto').scrollIntoView({behavior: 'smooth'})">
+        <span>●</span> Contacto
+      </button>
+    </div>
+  </header>
+
+  <div class="page">
+    <main>
+      <!-- INICIO -->
+      <section id="inicio">
+        <div class="hero">
+          <div class="hero-left">
+            <div class="hero-tagline"><span></span> Pentesting · Offensive Security</div>
+            <div class="hero-title">
+              <span>Hola, soy</span>
+              <div class="hero-title-strong">
+                Adrian Alonso Rumbaut
+                <span>// Pentester</span>
+              </div>
+            </div>
+            <p class="hero-subtitle">
+              Pentester con 1 año de experiencia en entornos reales, enfocado en identificar y explotar vulnerabilidades de forma ética para fortalecer la seguridad de aplicaciones, infraestructuras y organizaciones.
+            </p>
+
+            <div class="hero-meta">
+              <div class="hero-meta-item">
+                <strong>Rol</strong>
+                <span class="hero-meta-dot"></span>
+                Pentester · Red Team Jr
+              </div>
+              <div class="hero-meta-item">
+                <strong>Certs</strong>
+                <span class="hero-meta-dot"></span>
+                CEH · CCTS
+              </div>
+              <div class="hero-meta-item">
+                <strong>Idiomas</strong>
+                <span class="hero-meta-dot"></span>
+                Inglés B1
+              </div>
+            </div>
+
+            <div class="hero-actions">
+              <a href="#contacto" class="btn btn-primary">
+                Contactar ahora
+                <span class="btn-icon">➜</span>
+              </a>
+              <a href="#proyectos" class="btn btn-secondary">
+                Ver proyectos
+                <span class="btn-icon">▣</span>
+              </a>
+            </div>
+
+            <div class="hero-links">
+              <div class="hero-link">
+                <div class="hero-link-dot"></div>
+                <span>LinkedIn:&nbsp;</span>
+                <a href="https://www.linkedin.com/in/adrianalonsorumbaut/" target="_blank" rel="noopener noreferrer">
+                  /adrianalonsorumbaut
+                </a>
+              </div>
+              <div class="hero-link">
+                <div class="hero-link-dot"></div>
+                <span>GitHub:&nbsp;</span>
+                <a href="https://github.com/aarumbaut" target="_blank" rel="noopener noreferrer">
+                  @aarumbaut
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-right">
+            <div class="profile-card">
+               <div class="profile-photo">
+                  <img src="./Esta.png"
+                        alt="Foto de perfil de Adrian Alonso Rumbaut"
+                        style="width:100%; height:80%; object-fit:cover;" />
+                  <!--<div class="profile-badge">
+                     <span class="profile-badge-dot"></span>
+                     Disponible para proyectos y oportunidades
+                  </div>-->
+               </div>
+              <div class="profile-info">
+                <div class="profile-info-title">Perfil</div>
+                <div class="profile-info-name">Adrian Alonso Rumbaut</div>
+                <div class="profile-info-role">Pentester · Offensive Security</div>
+                <div class="profile-badges">
+                  <span class="profile-cert">CEH</span>
+                  <span class="profile-cert">CCTS</span>
+                  <span class="profile-tag">Web Apps</span>
+                  <span class="profile-tag">Infraestructura</span>
+                </div>
+                <p class="profile-info-text">
+                  Enfoque práctico, reportes claros orientados a negocio y una prioridad constante: mejorar la postura de seguridad desde una perspectiva ofensiva, responsable y profesional.
+                </p>
+                <div class="profile-meta">
+                  <div class="profile-meta-item">
+                    <span>Experiencia</span>
+                    1 año en pentesting
+                  </div>
+                  <div class="profile-meta-item">
+                    <span>Stack</span>
+                    Burp, Nmap, Metasploit, Linux
+                  </div>
+                  <div class="profile-meta-item">
+                    <span>Ubicación</span>
+                    Remoto / Híbrido
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-status">
+              <div class="hero-status-header">
+                <div>~/status/adrian</div>
+                <span>Última actividad</span>
+              </div>
+              <div class="hero-status-body">
+$ whoami
+&gt; pentester_jr
+
+$ focus
+&gt; ofensiva ética · análisis de riesgo · reporting ejecutivo
+
+$ next_step
+&gt; seguir perfeccionando metodologías, automatización y técnicas de explotación avanzada.
+              </div>
+              <div class="hero-status-footer">
+                <div class="hero-status-pill">Disponible para colaboraciones</div>
+                <div class="hero-status-pill">Write-ups y labs activos</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SOBRE MÍ + HABILIDADES -->
+      <section id="sobre-mi">
+        <div class="two-col">
+          <div class="card">
+            <div class="section-label">Sobre mí</div>
+            <h3>Construyendo seguridad desde la ofensiva ética</h3>
+            <p>
+              Soy <strong>pentester con 1 año de experiencia</strong> enfocado en ciberseguridad ofensiva: identificación,
+              explotación y documentación de vulnerabilidades en entornos reales. Mi trabajo se basa en la <strong>ética profesional</strong>,
+              el respeto absoluto a los alcances definidos y una comunicación clara con equipos técnicos y de negocio.
+            </p>
+            <br />
+            <p>
+              Disfruto diseccionar aplicaciones web, infraestructuras y servicios, entender cómo fallan y traducir
+              esos hallazgos en <strong>recomendaciones accionables</strong>. Estoy en aprendizaje continuo: laboratorios,
+              CTFs, write-ups y práctica constante para mantenerme alineado con las técnicas, tácticas y herramientas actuales.
+            </p>
+          </div>
+
+          <section id="habilidades" class="card">
+            <div class="section-label">Habilidades</div>
+            <h3>Pentesting orientado a impacto real</h3>
+            <p>
+              Cobertura completa del ciclo de pruebas de intrusión, desde el reconocimiento inicial hasta la entrega de reportes ejecutivos.
+            </p>
+            <div class="skills-grid">
+              <div>
+                <div class="skill-group-title">Metodología</div>
+                <div class="skill-tag-list">
+                  <span class="skill-tag">Reconocimiento</span>
+                  <span class="skill-tag">Enumeración</span>
+                  <span class="skill-tag">Explotación</span>
+                  <span class="skill-tag">Post-explotación</span>
+                  <span class="skill-tag">Pivoting</span>
+                </div>
+              </div>
+              <div>
+                <div class="skill-group-title">Ámbitos</div>
+                <div class="skill-tag-list">
+                  <span class="skill-tag">Aplicaciones web</span>
+                  <span class="skill-tag">Infraestructura</span>
+                  <span class="skill-tag">Servicios de red</span>
+                  <span class="skill-tag">Entornos Linux</span>
+                </div>
+              </div>
+              <div>
+                <div class="skill-group-title">Herramientas</div>
+                <div class="skill-tag-list">
+                  <span class="skill-tag">Burp Suite</span>
+                  <span class="skill-tag">Nmap</span>
+                  <span class="skill-tag">Metasploit</span>
+                  <span class="skill-tag">Gobuster</span>
+                  <span class="skill-tag">Hydra</span>
+                  <span class="skill-tag">Wireshark</span>
+                </div>
+              </div>
+              <div>
+                <div class="skill-group-title">Reporting</div>
+                <div class="skill-tag-list">
+                  <span class="skill-tag">Informe técnico</span>
+                  <span class="skill-tag">Resumen ejecutivo</span>
+                  <span class="skill-tag">Riesgo y negocio</span>
+                  <span class="skill-tag">Recomendaciones</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- CERTIFICACIONES -->
+      <section id="certificaciones">
+        <div class="certs-grid">
+          <div class="card">
+            <div class="section-label">Certificaciones</div>
+            <h3>Validando conocimiento con certificaciones</h3>
+            <p>
+              Cuento con certificaciones orientadas a pentesting y hacking ético que respaldan mi conocimiento técnico
+              y mi enfoque responsable en proyectos de seguridad.
+            </p>
+            <div class="pill-list">
+              <div class="pill">CEH · Certified Ethical Hacker</div>
+              <div class="pill">CCTS · Certified Cybersecurity Technical Specialist</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="section-label">Idiomas</div>
+            <h3>Comunicación</h3>
+            <p>
+              Capacidad para consumir documentación técnica, escribir reportes y mantener conversaciones básicas en inglés.
+            </p>
+            <div class="pill-list">
+              <div class="pill-alt">Inglés · B1</div>
+              <div class="pill-alt">Español · Nativo</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROYECTOS -->
+      <section id="proyectos">
+        <div class="section-label">Proyectos &amp; Write-ups</div>
+        <h2>Casos prácticos y laboratorios</h2>
+        <p>
+          Espacio dedicado a labs, CTFs y proyectos de pentesting. Aquí puedo documentar write-ups, metodologías seguidas,
+          vulnerabilidades halladas y aprendizajes clave.
+        </p>
+        <br />
+        <div class="projects-grid">
+          <article class="project-card">
+            <div>
+              <div class="project-title">Write-up · Laboratorio de aplicación web vulnerable</div>
+              <div class="project-meta">CWE comunes · OWASP Top 10 · Burp Suite · Reporting</div>
+              <p class="project-body">
+                Ejemplo de write-up donde se documenta el flujo completo: reconocimiento, identificación de vulnerabilidades
+                típicas (inyección, XSS, mala gestión de sesiones), explotación controlada y recomendaciones concretas para el equipo de desarrollo.
+              </p>
+              <div class="project-tags">
+                <span class="project-tag">Web</span>
+                <span class="project-tag">Burp</span>
+                <span class="project-tag">OWASP</span>
+              </div>
+            </div>
+            <div class="project-footer">
+              <span>Próximamente enlace a write-up detallado</span>
+              <a class="project-link" href="https://github.com/aarumbaut" target="_blank" rel="noopener noreferrer">
+                Ver más en GitHub
+                <span>↗</span>
+              </a>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div>
+              <div class="project-title">Infraestructura · Escaneo y explotación controlada</div>
+              <div class="project-meta">Nmap · Metasploit · Post-explotación</div>
+              <p class="project-body">
+                Simulación de evaluación de red: descubrimiento de servicios, priorización de objetivos, explotación y uso
+                de sesiones para demostrar riesgo real, siempre dentro de los límites definidos y con enfoque de minimización de impacto.
+              </p>
+              <div class="project-tags">
+                <span class="project-tag">Infra</span>
+                <span class="project-tag">Nmap</span>
+                <span class="project-tag">Metasploit</span>
+              </div>
+            </div>
+            <div class="project-footer">
+              <span>Checklist reproducible para futuros engagements</span>
+              <span></span>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div>
+              <div class="project-title">Write-ups y notas de laboratorio</div>
+              <div class="project-meta">CTFs · Labs · Aprendizaje continuo</div>
+              <p class="project-body">
+                Sección dedicada a recopilar retos resueltos, técnicas aprendidas y pequeñas automatizaciones que ayudan
+                a acelerar la fase de reconocimiento y explotación en nuevos proyectos.
+              </p>
+              <div class="project-tags">
+                <span class="project-tag">CTF</span>
+                <span class="project-tag">Labs</span>
+                <span class="project-tag">Notas</span>
+              </div>
+            </div>
+            <div class="project-footer">
+              <span>Actualizado de forma periódica</span>
+              <a class="project-link" href="https://github.com/aarumbaut" target="_blank" rel="noopener noreferrer">
+                GitHub
+                <span>↗</span>
+              </a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- CONTACTO -->
+      <section id="contacto">
+        <div class="section-label">Contacto</div>
+        <h2>Hablemos de seguridad</h2>
+        <p>
+          Si quieres comentar un proyecto, una posible colaboración o simplemente intercambiar ideas sobre ciberseguridad ofensiva,
+          puedes contactarme directamente por correo, LinkedIn o usando el formulario.
+        </p>
+        <br />
+        <div class="contact-wrapper">
+          <div class="contact-card">
+            <h3>Canales directos</h3>
+            <ul class="contact-list">
+              <li class="contact-item">
+                <div class="contact-icon">@</div>
+                <div>
+                  <div class="contact-label">Correo</div>
+                  <div class="contact-value">
+                    <a href="mailto:alonso.rumbaut@gmail.com">alonso.rumbaut@gmail.com</a>
+                  </div>
+                </div>
+              </li>
+              <li class="contact-item">
+                <div class="contact-icon">in</div>
+                <div>
+                  <div class="contact-label">LinkedIn</div>
+                  <div class="contact-value">
+                    <a href="https://www.linkedin.com/in/adrianalonsorumbaut/" target="_blank" rel="noopener noreferrer">
+                      linkedin.com/in/adrianalonsorumbaut
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <li class="contact-item">
+                <div class="contact-icon">GH</div>
+                <div>
+                  <div class="contact-label">GitHub</div>
+                  <div class="contact-value">
+                    <a href="https://github.com/aarumbaut" target="_blank" rel="noopener noreferrer">
+                      github.com/aarumbaut
+                    </a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="contact-card">
+            <h3>Formulario rápido</h3>
+            <form class="contact-form" onsubmit="handleFormSubmit(event)">
+              <div class="field-group">
+                <label for="name">Nombre</label>
+                <input id="name" name="name" type="text" placeholder="Tu nombre o empresa" autocomplete="name" />
+              </div>
+              <div class="field-group">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="tu@email.com"
+                       autocomplete="email" required />
+              </div>
+              <div class="field-group">
+                <label for="message">Mensaje</label>
+                <textarea id="message" name="message" placeholder="Cuéntame brevemente qué necesitas o qué te gustaría comentar." required></textarea>
+              </div>
+              <div class="contact-note">
+                El formulario es demostrativo. Para asegurar respuesta, escríbeme directamente a
+                <a href="mailto:alonso.rumbaut@gmail.com">alonso.rumbaut@gmail.com</a>.
+              </div>
+              <div class="form-footer">
+                <div id="formStatus" class="form-status"></div>
+                <button type="submit" class="btn btn-secondary">
+                  Enviar mensaje
+                  <span class="btn-icon">➤</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <div>© <span id="year"></span> Adrian Alonso Rumbaut · Portfolio de pentesting y ciberseguridad ofensiva.</div>
+  </footer>
+
+  <script>
+    // Año automático
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Menú responsive
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    navToggle.addEventListener('click', () => {
+      const isOpen = navMenu.classList.toggle('open');
+      navToggle.classList.toggle('open', isOpen);
+      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (navMenu.classList.contains('open')) {
+          navMenu.classList.remove('open');
+          navToggle.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    // Envío de formulario (demo)
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      const statusEl = document.getElementById('formStatus');
+      statusEl.classList.remove('error');
+      statusEl.textContent = 'Simulación de envío realizada. Por favor, contacta por correo para una respuesta real.';
+      setTimeout(() => {
+        statusEl.textContent = '';
+      }, 6000);
+    }
+  </script>
+</body>
+</html>
